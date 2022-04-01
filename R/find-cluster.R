@@ -1,46 +1,20 @@
-#' Find clusters in one-partite graph
-#' @description This function will extract the clusters in one projection of the
-#'   bipartite graph of the given incidence matrix.
+#' Find clusters in projected unipartite networks
+#' @description This function looks for the clusters in the projected unipartite networks of the bipartite network (the incidence matrix) that was given to it.
 #'
-#' @details  This function will perform optional pre-processing on the input
-#'   incidence matrix, such as normalization. Then use the matrix to perform
-#'   bipartite graph projection, and perform optional pre-processing in one of
-#'   the specified parts, such as removing edges with lower weights, that is,
-#'   weak edges. The removal method and threshold selection can also be
-#'   specified, and for the remaining You can choose to keep the original weight
-#'   or set all of them to 1. For the graphs obtained after processing,
-#'   implement some clustering methods in \href{https://igraph.org/r/}{igraph}
-#'   to obtain the classification results. In addition, if there is an input of
-#'   external features (prior knowledge), the function will also compare the
-#'   clustering results obtained with external features regard similarity.
+#' @details  This function performs optional preprocessing, such as normalization, on the input incidence matrix (bipartite network). The matrix is then used to perform bipartite network projection and optional preprocessing on one of the projected networks specified, such as removing edges with low weights (weak edges). Additionally, the user can specify the removal method, threshold value, or binarization of the weights. For the networks obtained after processing, this function implements some clustering methods in \href{https://igraph.org/r/}{igraph} such as "walktrap" and "infomap", to detect the communities within the network. Furthermore, if external features (prior knowledge) are provided, the function compares the clustering results obtained with the external features in terms of similarity as an external validation of clustering. Otherwise, several internal validation criteria such as modularity and coverage are only represented to compare the clustering results.
 #'
-#' @param inc_mat A matrix including valid values and NAs.
-#' @param dim An integer, 1 or 2, indicating which one-partite projection should
-#'   be used. Default is 1
-#' @param method A string array indicating the clustering methods. Defalut is
-#'   "all" which means all clutering methods in this function will be used,
-#'   other options are conbinations of "walktrap", "multi level", "infomap",
-#'   "label propagation", "leading eigenvector", "spinglass", "fast greedy".
-#' @param normalization A logical, whether to normalize the weights. Default is
-#'   TRUE.
-#' @param rm_weak_edges A logical, whether to remove the weak edges. Default is
-#'   TRUE.
-#' @param rm_method A string indicating the weak edges removing method, if
-#'   'rm_weak_edges' is False, then this argument will be ignored. Default is
-#'   'delete', which means delete weak edges from graph, other option is
-#'   'as_zero', set the weak edges' weights to 0.
-#' @param threshold A string indicating the weak edges threshold selection
-#'   method, if 'rm_weak_edges' is False, then this argument will be ignored..
-#'   Default is 'median', other option is 'keep_connected', removing edges in
-#'   ascending order of weight until the last one that keep the graph connected.
-#' @param set_remaining_to_1 A logical, whether to set the remaining edges'
-#'   weight to 1. Default is TRUE.
-#' @param extra_feature A dataframe has only one column indicating the
-#'   membership of each nodes (rownames).
-#' @param comparison A logical, whether to compare different clustering methods'
-#'   result. Default is TRUE.
+#' @param inc_mat An incidence matrix.
+#' @param part An integer, 1 or 2, indicating which unipartite projection should be used. The default is 1.
+#' @param method A string array indicating the clustering methods. The defalut is "all", which means all available clustering methods in this function are utilized. Other options are combinations of "walktrap", "multi level", "infomap", "label propagation", "leading eigenvector", "spinglass", and "fast greedy".
+#' @param normalization A logical value indicating whether edge weights should be normalized before the computation proceeds. The default is TRUE.
+#' @param rm_weak_edges A logical value indicating whether weak edges should be removed before the computation proceeds. The default is TRUE.
+#' @param rm_method A string indicating the weak edges removing method. If `rm_weak_edges` is False, then this argument is ignored. The default is `delete`, which means deleting weak edges from the network. The other option is `as_zero`, which sets the weak edges' weights to 0.
+#' @param threshold A string indicating the weak edge threshold selection method. If `rm_weak_edges` is False, then this argument is ignored. By default, `median` is used. The other option is `keep_connected`, which prevents the network from being unconnected and removes edges in ascending order of weights.
+#' @param set_remaining_to_1 A logical value indicating whether the remaining edges' weight should be set to 1. The default is TRUE.
+#' @param extra_feature A data frame object that shows the group membership of each node based on prior knowledge.
+#' @param comparison A logical value indicating whether clustering methods should be compared to each other using internal measures of clustering, including modularity, average silluoutte width, and coverage. The default value is TRUE.
 #'
-#' @return A list containing the clustering results.
+#' @return A list containing the igraph object of the projected network, the clustering results of each method on the projected network separately, along with a comparison between them. The applied clustering arguments and the network's distance matrix are also included in this list for potential use in the next steps. In the case of weighted projected networks, the distance matrix is obtained by inverting the edge weights. The comparison of selected clustering methods is also presented as bar plots simultaneously.
 #'
 #' @import igraph
 #' @importFrom  stats median
@@ -50,22 +24,22 @@
 #' @export
 #'
 #' @examples
-#' # generate a incidence matrix
-#' data <- matrix(c(1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1), nrow = 3)
+#' # generate an incidence matrix
+#' data <- matrix(c(1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0), nrow = 3)
 #' colnames(data) <- letters[1:5]
 #' rownames(data) <- LETTERS[1:3]
 #'
 #' # run findCluster() to do clustering
 #' cls <- findCluster(
 #'   data,
-#'   dim = 1,
+#'   part = 1,
 #'   method = "all",
 #'   normalization = FALSE,
 #'   rm_weak_edges = TRUE,
-#'   comparison = FALSE
+#'   comparison = TRUE
 #' )
 findCluster <- function(inc_mat,
-                        dim = 1,
+                        part = 1,
                         method = "all",
                         normalization = TRUE,
                         rm_weak_edges = TRUE,
@@ -80,7 +54,7 @@ findCluster <- function(inc_mat,
   }
 
   # Projection
-  projection_g <- projectGraph(inc_mat, dim = dim)
+  projection_g <- projectGraph(inc_mat, dim = part)
 
   # Remove weak edges
   if (rm_weak_edges) {
@@ -241,11 +215,11 @@ compareClusters <- function(clusters,
       mod <- 0
     }
     result[method, "modularity"] <- mod
-    score <- scoreCluster(community = communities[[method]], graph = g, distance_matrix = dist_mat)
+    score <- scoreCluster(community = communities[[method]], graph = g, dist_mat = dist_mat)
     result[method, "avg.silwidth"] <- score$fpc_stats$avg.silwidth
     result[method, "coverage"] <- score$coverage
     if (!is.null(extra_feature)) {
-      suppressWarnings(validation <- validateCluster(dist_mat = dist_mat, extra_feature = extra_feature, community = communities[[method]]))
+      suppressWarnings(validation <- validateCluster(community = communities[[method]], extra_feature = extra_feature, dist_mat = dist_mat))
       corr_rad <- validation$corrected.rand
       if (corr_rad < 0) {
         corr_rad <- 0

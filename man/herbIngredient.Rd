@@ -7,19 +7,17 @@
 \format{
 A tibble with two variables:
 \describe{
-\item{\code{herb}}{names of herbs}
-\item{\code{pubchem_id}}{unique id of ingredients in pubchemn for \code{herb}}
+\item{\code{herb}}{Scientific Latin names of available herbs in TCM database}
+\item{\code{pubchem_id}}{unique compound id (CID) of ingredients based on PubChem database for available \code{herb} in TCMID database}
 }
 }
 \source{
-\url{https://www.frontiersin.org/articles/10.3389/fphar.2020.01319/full#h6}
+Huang, L., Xie, D., Yu, Y., Liu, H., Shi, Y., Shi, T., & Wen, C. (2018). TCMID 2.0: a comprehensive resource for TCM. Nucleic acids research, 46(D1), D1117–D1120. \url{https://academic.oup.com/nar/article/46/D1/D1117/4584630}
 }
 \usage{
 herbIngredient
 }
 \description{
-This data set used the second version of the TCMID database, as the largest
-dataset in TCM herbs field, which contains richer experimental data
-originating from ingredient-specific and herbal mass spectrometry spectra.
+The second version of the TCMID database was used as one of the large datasets in the TCM herb field. TCMID includes additional ingredient-specific experimental data based on herbal mass spectrometry spectra. The herb and ingredient associations from this database are provided here.
 }
 \keyword{datasets}
