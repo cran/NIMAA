@@ -2,7 +2,7 @@
 % Please edit documentation in R/validate-cluster.R
 \name{validateCluster}
 \alias{validateCluster}
-\title{Validate the clusters in a projected network based on additional external measures.}
+\title{Validate the cluster analysis in a projected network based on additional external measures.}
 \usage{
 validateCluster(community, extra_feature, dist_mat)
 }
@@ -24,7 +24,7 @@ This function calculates the similarity of a given clustering method to the prov
 beatAML_data <- NIMAA::beatAML[1:10000,]
 
 # convert to incidence matrix
-beatAML_incidence_matrix <- el2IncMatrix(beatAML_data)
+beatAML_incidence_matrix <- nominalAsBinet(beatAML_data)
 
 # do clustering
 cls <- findCluster(beatAML_incidence_matrix,

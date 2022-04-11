@@ -14,8 +14,8 @@ knitr::kable(NIMAA::beatAML[1:10,], caption='The first ten rows of beatAML datas
 # read the data
 beatAML_data <- NIMAA::beatAML
 
-## ----plotInput function, results='asis'---------------------------------------
-beatAML_incidence_matrix <- plotInput(
+## ----plotIncMatrix function, results='asis'-----------------------------------
+beatAML_incidence_matrix <- plotIncMatrix(
   x = beatAML_data, # original data with 3 columns
   index_nominal = c(2,1), # the first two columns are nominal data
   index_numeric = 3,  # the third column is numeric data

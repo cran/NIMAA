@@ -18,12 +18,12 @@
 #' beatAML_data <- NIMAA::beatAML[1:10000,]
 #'
 #' # convert to incidence matrix
-#' beatAML_incidence_matrix <- el2IncMatrix(beatAML_data)
+#' beatAML_incidence_matrix <- nominalAsBinet(beatAML_data)
 #'
 #' # do clustering
 #' cls <- findCluster(beatAML_incidence_matrix, part = 1)
 #'
-#' # predict the edges by imputation the wights
+#' # predict the edges by imputation the weights
 #' imputed_beatAML <- predictEdge(beatAML_incidence_matrix)
 #'
 #' # validate the edge prediction

@@ -2,7 +2,7 @@
 % Please edit documentation in R/score-cluster.R
 \name{scoreCluster}
 \alias{scoreCluster}
-\title{Score the clusters in a projected network based on additional internal measures.}
+\title{Score the cluster analysis in a projected network based on additional internal measures.}
 \usage{
 scoreCluster(community, graph, dist_mat)
 }
@@ -14,17 +14,17 @@ scoreCluster(community, graph, dist_mat)
 \item{dist_mat}{A matrix containing the distance of nodes in the network. This matrix can be retrieved by the output of \code{\link{findCluster}} to analyze.}
 }
 \value{
-A list of various scores.
+A list containing internal cluster validity scores.
 }
 \description{
-This function provides additional internal cluster validity measures such as entropy and coverage. The concept of scoring is according to the weight fraction of all intra-cluster edges relative to the total weight of all edges in the graph. This function requires the community object, igraph object and distance matrix returned by \code{\link{findCluster}} to analyze.
+This function provides additional internal cluster validity measures such as entropy and coverage. The concept of scoring is according to the weight fraction of all intra-cluster edges relative to the total weights of all edges in the graph. This function requires the community object, igraph object and distance matrix returned by \code{\link{findCluster}} to analyze.
 }
 \examples{
 # load part of the beatAML data
 beatAML_data <- NIMAA::beatAML[1:10000,]
 
 # convert to incidence matrix
-beatAML_incidence_matrix <- el2IncMatrix(beatAML_data)
+beatAML_incidence_matrix <- nominalAsBinet(beatAML_data)
 
 # do clustering
 cls <- findCluster(beatAML_incidence_matrix,

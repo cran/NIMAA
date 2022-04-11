@@ -1,4 +1,4 @@
-#' Validate the clusters in a projected network based on additional external measures.
+#' Validate the cluster analysis in a projected network based on additional external measures.
 #' @description This function calculates the similarity of a given clustering method to the provided ground truth as external features (prior knowledge). This function provides external cluster validity measures including `corrected.rand` and `jaccard similarity`. This function requires the community object, igraph object and distance matrix returned by \code{\link{findCluster}} to analyze.
 #'
 #' @param community  An igraph community object.
@@ -15,7 +15,7 @@
 #' beatAML_data <- NIMAA::beatAML[1:10000,]
 #'
 #' # convert to incidence matrix
-#' beatAML_incidence_matrix <- el2IncMatrix(beatAML_data)
+#' beatAML_incidence_matrix <- nominalAsBinet(beatAML_data)
 #'
 #' # do clustering
 #' cls <- findCluster(beatAML_incidence_matrix,
