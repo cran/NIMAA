@@ -13,7 +13,7 @@ A tibble with three variables:
 }
 }
 \source{
-Tyner, Jeffrey W., et al.(2018), Functional Genomic Landscape of Acute Myeloid Leukaemia. Nature 562 (7728): 526–31. \url{http://vizome.org/aml/}
+Tyner, Jeffrey W., et al.(2018), Functional Genomic Landscape of Acute Myeloid Leukaemia. Nature 562 (7728): 526–31. \url{https://www.vizome.org/aml/}
 }
 \usage{
 beatAML

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -24,7 +24,7 @@ beatAML_incidence_matrix <- plotIncMatrix(
   verbose = FALSE # NOT save the figures to local folder
   )
 
-## ---- echo=FALSE, out.width="100%", fig.cap="The beatAML dataset as an incidence matrix"----
+## ----echo=FALSE, out.width="100%", fig.cap="The beatAML dataset as an incidence matrix"----
 knitr::include_graphics("patient_id-inhibitor.png")
 
 ## ----plotBipartite, fig.height = 7, fig.width = 7, fig.align = "center"-------
@@ -36,7 +36,7 @@ bipartGraph
 ## ----plotBipartiteInteractive, results='hide'---------------------------------
 plotBipartiteInteractive(inc_mat = beatAML_incidence_matrix)
 
-## ---- echo=FALSE, out.width="100%", fig.cap="beatAML dataset as incidence matrix"----
+## ----echo=FALSE, out.width="100%", fig.cap="beatAML dataset as incidence matrix"----
 knitr::include_graphics("interactiveplot.png")
 
 ## -----------------------------------------------------------------------------
@@ -55,13 +55,13 @@ sub_matrices <- extractSubMatrix(
   print_skim = FALSE
   )
 
-## ---- echo=FALSE, out.width="30%", fig.cap="Row-wise arrangement"-------------
+## ----echo=FALSE, out.width="30%", fig.cap="Row-wise arrangement"--------------
 knitr::include_graphics("Row_wise_arrangement.png")
 
-## ---- echo=FALSE, out.width="100%", fig.cap="Column-wise arrangement"---------
+## ----echo=FALSE, out.width="100%", fig.cap="Column-wise arrangement"----------
 knitr::include_graphics("Column_wise_arrangement.png")
 
-## ---- eval=TRUE, echo= TRUE, results='hide',error=FALSE, warning=FALSE, message=FALSE, fig.height = 3, fig.width = 7, fig.align = "center"----
+## ----eval=TRUE, echo= TRUE, results='hide',error=FALSE, warning=FALSE, message=FALSE, fig.height = 3, fig.width = 7, fig.align = "center"----
 cls1 <- findCluster(
   sub_matrices$Rectangular_element_max,
   part = 1,
@@ -106,26 +106,26 @@ cls2 <- findCluster(
   )
 
 ## ----plotcluster,eval = FALSE-------------------------------------------------
-#  plotCluster(graph=cls2$graph,cluster = cls2$louvain)
+# plotCluster(graph=cls2$graph,cluster = cls2$louvain)
 
-## ---- echo=FALSE, out.width="100%", fig.cap="Interactive plot for function plotCluster()"----
+## ----echo=FALSE, out.width="100%", fig.cap="Interactive plot for function plotCluster()"----
 knitr::include_graphics("plotCluster.png")
 
 ## ----visualClusterInBipartite, eval = FALSE-----------------------------------
-#  visualClusterInBipartite(
-#    data = beatAML_data,
-#    community_left = cls1$leading_eigen,
-#    community_right = cls2$fast_greedy,
-#    name_left = 'patient_id',
-#    name_right = 'inhibitor')
+# visualClusterInBipartite(
+#   data = beatAML_data,
+#   community_left = cls1$leading_eigen,
+#   community_right = cls2$fast_greedy,
+#   name_left = 'patient_id',
+#   name_right = 'inhibitor')
 
-## ---- echo=FALSE, out.width="100%", fig.cap="Interactive plot for function visualClusterInBipartite()"----
+## ----echo=FALSE, out.width="100%", fig.cap="Interactive plot for function visualClusterInBipartite()"----
 knitr::include_graphics("visualClusterInBipartite.png")
 
 ## ----eval=FALSE, echo=TRUE----------------------------------------------------
-#  scoreCluster(community = cls2$infomap,
-#               graph = cls2$graph,
-#               dist_mat = cls2$distance_matrix)
+# scoreCluster(community = cls2$infomap,
+#              graph = cls2$graph,
+#              dist_mat = cls2$distance_matrix)
 
 ## ----eval=TRUE----------------------------------------------------------------
 validateCluster(community = cls$leading_eigen,
@@ -138,7 +138,7 @@ imputations <- predictEdge(inc_mat = beatAML_incidence_matrix,
 # show the result format
 summary(imputations)
 
-## ---- eval=TRUE, fig.height = 6, fig.width = 7, fig.align = "center"----------
+## ----eval=TRUE, fig.height = 6, fig.width = 7, fig.align = "center"-----------
 validateEdgePrediction(imputation = imputations,
                    refer_community = cls1$fast_greedy,
                    clustering_args = cls1$clustering_args)

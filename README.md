@@ -4,7 +4,7 @@
 # NIMAA <a href='https://github.com/jafarilab/NIMAA'><img src="man/figures/logo.png" align="right" height="139"/></a>
 
 <!-- badges: start -->
-
+ 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/NIMAA)](https://cran.r-project.org/package=NIMAA)
 [![GitHub
@@ -193,4 +193,4 @@ validateEdgePrediction(imputation = imputations,
 ## License
 
 [![GPLv3
-License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/license)
